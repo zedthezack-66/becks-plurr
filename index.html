@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Becky... we need to talk 👀</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--pink:#ff2d78;--purple:#7c3aed;--yellow:#fbbf24;--green:#10b981;--dark:#0a0a0f;--card:#12121a;--border:#ffffff18;}
+body{background:var(--dark);color:#fff;font-family:'Space Grotesk',sans-serif;min-height:100vh;overflow-x:hidden;cursor:none;}
+#cursor{position:fixed;pointer-events:none;z-index:9999;width:20px;height:20px;transform:translate(-50%,-50%);}
+#cdot{width:8px;height:8px;background:var(--pink);border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);}
+#cring{width:28px;height:28px;border:2px solid var(--pink);border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);transition:all 0.15s;opacity:0.6;}
+body.clicking #cring{transform:translate(-50%,-50%) scale(1.6);}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 50% 0%,#7c3aed22,transparent),radial-gradient(ellipse 60% 40% at 80% 80%,#ff2d7822,transparent);pointer-events:none;}
+.stamp{display:inline-block;border:3px solid var(--pink);color:var(--pink);font-family:'Syne',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;padding:4px 12px;border-radius:4px;margin-bottom:1.5rem;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+h1{font-family:'Syne',sans-serif;font-size:clamp(2.5rem,8vw,6rem);font-weight:800;line-height:0.95;margin-bottom:1rem;}
+h1 span{color:var(--pink);}
+.subtitle{color:#ffffff88;font-size:1.1rem;max-width:500px;margin:0 auto 3rem;line-height:1.6;}
+.scrollhint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);color:#ffffff44;font-size:13px;animation:bounce 1.5s infinite;}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-8px)}}
+section{max-width:680px;margin:0 auto;padding:3rem 1.5rem;}
+.slabel{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--purple);font-weight:600;margin-bottom:1rem;}
+h2{font-family:'Syne',sans-serif;font-size:2rem;font-weight:700;margin-bottom:0.5rem;}
+.muted{color:#ffffff66;font-size:0.95rem;margin-bottom:2rem;line-height:1.6;}
+.dlbox{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2.5rem 2rem;text-align:center;position:relative;overflow:hidden;margin-bottom:2rem;}
+.dlbox::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--purple),var(--pink));}
+.dlbox .icon{font-size:3.5rem;margin-bottom:1rem;display:block;}
+.dlbox h3{font-family:'Syne',sans-serif;font-size:1.25rem;margin-bottom:0.5rem;}
+.dlbox p{color:#ffffff55;font-size:0.9rem;margin-bottom:1.75rem;}
+.btndl{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;padding:0.9rem 1.8rem;border-radius:10px;font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:600;border:none;cursor:none;text-decoration:none;transition:transform 0.15s,box-shadow 0.15s;}
+.btndl:hover{transform:scale(1.04);box-shadow:0 8px 32px #ff2d7844;}
+hr.div{border:none;border-top:1px solid var(--border);margin:1rem 0 3rem;}
+.sigwrap{margin:2rem auto;max-width:500px;}
+.siglabel{font-size:13px;color:#ffffff66;margin-bottom:0.5rem;text-align:left;}
+#sigpad{width:100%;height:130px;background:#ffffff08;border:1px solid var(--border);border-radius:12px;touch-action:none;display:block;}
+.sigclr{font-size:12px;color:#ffffff44;background:none;border:none;cursor:none;margin-top:0.5rem;text-decoration:underline;font-family:'Space Grotesk',sans-serif;float:right;}
+.ogrid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;max-width:560px;margin:2rem auto;}
+.btn{padding:1rem 1.5rem;border-radius:12px;font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:600;border:none;cursor:none;transition:transform 0.15s,box-shadow 0.15s;position:relative;}
+.btnyes{background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;grid-column:1/-1;font-size:1.2rem;padding:1.25rem;}
+.btnyes:hover{transform:scale(1.03);box-shadow:0 8px 32px #ff2d7844;}
+.btnyes:active{transform:scale(0.97);}
+.btnno{background:var(--card);color:#ffffff44;border:1px solid var(--border);font-size:0.9rem;position:fixed;z-index:5000;padding:0.8rem 1.2rem;min-width:130px;}
+.stip{font-size:12px;color:#ffffff33;margin-top:0.5rem;font-style:italic;text-align:center;}
+.ectr{font-size:11px;color:#ffffff22;text-align:center;margin-top:0.75rem;}
+.toastbox{position:fixed;top:1.5rem;right:1.5rem;z-index:8888;display:flex;flex-direction:column;gap:0.75rem;pointer-events:none;max-width:300px;}
+.toast{background:#1a1a2e;border:1px solid var(--border);border-radius:12px;padding:1rem 1.25rem;font-size:0.88rem;line-height:1.5;animation:tIn 0.3s ease;pointer-events:all;border-left:3px solid var(--pink);}
+@keyframes tIn{from{transform:translateX(120%);opacity:0}to{transform:none;opacity:1}}
+@keyframes tOut{from{transform:none;opacity:1}to{transform:translateX(120%);opacity:0}}
+.toast.out{animation:tOut 0.3s ease forwards;}
+.toast .te{font-size:1.3rem;margin-bottom:4px;display:block;}
+.toast strong{color:var(--yellow);}
+.overlay{position:fixed;inset:0;z-index:6666;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;opacity:0;pointer-events:none;transition:opacity 0.5s;background:#000000ee;}
+.overlay.show{opacity:1;pointer-events:all;}
+.sstamp{font-family:'Syne',sans-serif;font-size:2.8rem;font-weight:800;border:6px solid var(--green);color:var(--green);padding:0.5rem 2rem;border-radius:8px;transform:rotate(-8deg);display:inline-block;margin:1.5rem auto;animation:stampIn 0.4s 0.3s cubic-bezier(0.2,1.6,0.6,1) both;}
+@keyframes stampIn{from{transform:rotate(-8deg) scale(3);opacity:0}to{transform:rotate(-8deg) scale(1);opacity:1}}
+.overlay h2{font-family:'Syne',sans-serif;font-size:2.6rem;color:var(--pink);margin-bottom:1rem;}
+.overlay p{color:#ffffffaa;font-size:1.05rem;max-width:440px;line-height:1.6;}
+.snote{margin-top:1rem;font-size:0.8rem;color:#ffffff33;font-style:italic;}
+.prankbig{font-size:clamp(3rem,12vw,7rem);line-height:1;margin-bottom:1rem;}
+.prankh{font-family:'Syne',sans-serif;font-size:clamp(2rem,6vw,4.5rem);color:var(--yellow);margin-bottom:1rem;}
+.prankp{color:#ffffffbb;font-size:1.1rem;max-width:480px;line-height:1.7;margin-bottom:0.75rem;}
+.pranksub{font-size:0.88rem;color:#ffffff44;max-width:400px;}
+.prankin{animation:popIn 0.5s 0.1s cubic-bezier(0.2,1.4,0.6,1) both;}
+@keyframes popIn{from{transform:scale(0.4);opacity:0}to{transform:scale(1);opacity:1}}
+canvas.cvc{position:fixed;inset:0;pointer-events:none;z-index:7777;}
+.pts{position:fixed;inset:0;pointer-events:none;z-index:100;}
+.pt{position:fixed;border-radius:50%;pointer-events:none;animation:fup 1.2s ease-out forwards;}
+@keyframes fup{from{opacity:1;transform:translateY(0) scale(1)}to{opacity:0;transform:translateY(-180px) scale(0)}}
+@media(max-width:480px){.ogrid{grid-template-columns:1fr;}.btnyes{grid-column:1;}h1{font-size:2.2rem;}}
+</style>
+</head>
+<body>
+
+<div id="cursor"><div id="cdot"></div><div id="cring"></div></div>
+<div class="toastbox" id="tb"></div>
+<div class="pts" id="pts"></div>
+<canvas class="cvc" id="cc"></canvas>
+
+<!-- Signed overlay -->
+<div class="overlay" id="so">
+  <div class="sstamp">SIGNED ✓</div>
+  <h2>she's so cooked 💅</h2>
+  <p>Congratulations Becky. The agreement has been acknowledged, received, and emotionally processed. You are now locked in. No take-backs.</p>
+  <p class="snote">*this document is completely non-binding but very much emotionally present*</p>
+</div>
+
+<!-- Prank overlay -->
+<div class="overlay" id="po">
+  <div class="prankin">
+    <div class="prankbig">😂💀🎉</div>
+    <div class="prankh">BESTIE IT WAS A PRANK</div>
+    <p class="prankp">You just signed a completely fake document. There is no contract. There were never any terms. The only thing legally binding right now is how hard you got got.</p>
+    <p class="pranksub">screenshot this. frame it. "the day Becky signed the situationship paperwork" 😭 send this screenshot to me rn</p>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="stamp">⚠️ Becky please read this ⚠️</div>
+  <h1>The<br><span>Amendment</span><br>Agreement™</h1>
+  <p class="subtitle">Becky, I need you to review something real quick. It's not that deep. I just need your signature. Very normal. Totally fine. 😇</p>
+  <div class="scrollhint">↓ scroll bestie</div>
+</div>
+
+<section>
+  <div class="slabel">The Document</div>
+  <h2>We drew up some terms 📋</h2>
+  <p class="muted">You already know what this is about. The full amendment is downloadable right here. Read it, review it, do whatever — but you know the deal. Then come back and sign.</p>
+  <div class="dlbox">
+    <span class="icon">📄</span>
+    <h3>Amendment &amp; Agreement — Becky Edition</h3>
+    <p>The official, emotionally present document. Download and review before signing. (We both know you won't read it but it's here.)</p>
+    <a class="btndl" id="dlbtn" href="#" download="Amendment_Agreement_Becky.txt">⬇️ Download the Document</a>
+  </div>
+</section>
+
+<hr class="div">
+
+<section style="text-align:center;padding-top:1rem;">
+  <div class="slabel">The moment of truth</div>
+  <h2>Sign it, Becky 🖊️</h2>
+  <p class="muted" style="text-align:center">Draw your signature below. Make it cute. Then hit agree.</p>
+  <div class="sigwrap">
+    <div class="siglabel">Your signature (yes, actually draw it):</div>
+    <canvas id="sigpad"></canvas>
+    <button class="sigclr" onclick="clearSig()">clear</button>
+    <div style="clear:both"></div>
+  </div>
+  <div class="ogrid">
+    <button class="btn btnyes" onclick="handleYes()">✅ I agree, I'm locked in</button>
+    <button class="btn btnno" id="bn1">nah I'm good</button>
+    <button class="btn btnno" id="bn2">I need to think</button>
+  </div>
+  <div class="stip">hover the "no" buttons, i dare you Becky</div>
+  <div class="ectr" id="ec"></div>
+</section>
+
+<script>
+const cur=document.getElementById('cursor');
+document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';});
+document.addEventListener('mousedown',()=>document.body.classList.add('clicking'));
+document.addEventListener('mouseup',()=>document.body.classList.remove('clicking'));
+
+// Download blob
+const docTxt=`AMENDMENT & AGREEMENT
+
+BETWEEN:
+Party A: ___________________________ ("The One Who Initiated This Draft")
+Party B: Becky ("The Other One")
+
+EFFECTIVE DATE: The moment the text is acknowledged with a thumbs-up emoji.
+
+1. Scope of the Situation
+Both parties acknowledge this is not a traditional relationship (due to allergies to labels, timing, or general emotional buffering). That said — baseline expectations apply. Nothing crazy.
+
+2. The Eyes Forward Policy
+- Reasonable Boundaries: Both parties agree to act in good faith. Deliberate pursuit of other romantic interests while this agreement is in effect is not cool.
+- Disclosure: Hardcore flirting and entertaining serious prospects should be disclosed, not hidden. We're adults.
+- No Obligation to Announce: Don't act aggressively single where it'll get back to the other party. Just be normal.
+
+3. Digital Etiquette & Communication
+- Response Window: Text replies should not take days. Don't leave someone on read for sport.
+- Social Media: Do whatever feels natural. Soft launching — fine. Hard launching is a conversation first.
+
+4. Quality Control & Maintenance
+- Comfortable Coexistence: Both parties may do relationship-adjacent activities without panicking about what it means. It can be discussed like normal people, if and when needed.
+
+5. Consequences for Breach of Section 2 or 4:
+- Loss of the general vibe and associated benefits.
+
+IN WITNESS WHEREOF, the parties have executed this completely non-binding but emotionally present agreement.
+
+Party A Signature: ___________________________ Date: ____________
+Party B (Becky) Signature: ___________________________ Date: ____________`;
+const blob=new Blob([docTxt],{type:'text/plain'});
+document.getElementById('dlbtn').href=URL.createObjectURL(blob);
+
+// Toasts
+const msgs=[
+  {e:'😭',t:'<strong>Becky no.</strong> The "no" buttons are decorative. Like a terms of service. They exist but they don\'t work.'},
+  {e:'💀',t:'you already scrolled this far. <strong>that\'s basically consent bestie.</strong>'},
+  {e:'🫡',t:'love the confidence. <strong>truly.</strong> but the only option is the pink button. sorry not sorry.'},
+  {e:'🎭',t:'oh wow you found a button. <strong>cute.</strong> unfortunately that one is vibes-only.'},
+  {e:'📜',t:'per clause 2.1: <strong>the run-away option was patched out.</strong> update your expectations Becky.'},
+  {e:'😌',t:'i respect the attempt. <strong>i really do.</strong> but also: no.'},
+  {e:'🤌',t:'the audacity. the nerve. the <strong>absolute gall.</strong> sign the document.'},
+  {e:'🫠',t:'the escape button left the chat. <strong>it saw the situation and chose peace.</strong> unlike you.'},
+];
+let ti=0,nc=0;
+function toast(m,col){
+  const c=document.getElementById('tb'),d=document.createElement('div');
+  d.className='toast';if(col)d.style.borderLeftColor=col;
+  d.innerHTML=`<span class="te">${m.e}</span>${m.t}`;
+  c.appendChild(d);
+  setTimeout(()=>{d.classList.add('out');setTimeout(()=>d.remove(),300);},4200);
+}
+
+function reposition(btn){
+  const vw=window.innerWidth-160,vh=window.innerHeight-60;
+  btn.style.left=Math.max(10,Math.random()*vw)+'px';
+  btn.style.top=Math.max(60,Math.random()*vh)+'px';
+}
+document.querySelectorAll('.btnno').forEach(b=>{
+  reposition(b);
+  b.addEventListener('mouseenter',()=>reposition(b));
+  b.addEventListener('click',()=>{
+    nc++;toast(msgs[ti%msgs.length]);ti++;
+    document.getElementById('ec').textContent='escape attempts: '+nc+'. ratio.';
+    reposition(b);pts(parseInt(b.style.left),parseInt(b.style.top));
+  });
+});
+
+function pts(x,y){
+  const c=['#ff2d78','#7c3aed','#fbbf24','#10b981'];
+  for(let i=0;i<10;i++){
+    const e=document.createElement('div');e.className='pt';
+    e.style.cssText=`left:${x+Math.random()*80}px;top:${y+Math.random()*40}px;background:${c[i%4]};width:${4+Math.random()*6}px;height:${4+Math.random()*6}px;`;
+    document.getElementById('pts').appendChild(e);setTimeout(()=>e.remove(),1300);
+  }
+}
+
+// Sig pad
+const sc=document.getElementById('sigpad'),sx=sc.getContext('2d');
+let drw=false,lx=0,ly=0;
+function rz(){sc.width=sc.offsetWidth;sc.height=sc.offsetHeight;}rz();
+window.addEventListener('resize',rz);
+function gp(e){const r=sc.getBoundingClientRect(),t=e.touches?e.touches[0]:e;return{x:t.clientX-r.left,y:t.clientY-r.top};}
+sc.addEventListener('mousedown',e=>{drw=true;const p=gp(e);lx=p.x;ly=p.y;});
+sc.addEventListener('mousemove',e=>{if(!drw)return;const p=gp(e);sx.beginPath();sx.moveTo(lx,ly);sx.lineTo(p.x,p.y);sx.strokeStyle='#ff2d78';sx.lineWidth=2.5;sx.lineCap='round';sx.stroke();lx=p.x;ly=p.y;});
+sc.addEventListener('mouseup',()=>drw=false);
+sc.addEventListener('touchstart',e=>{e.preventDefault();drw=true;const p=gp(e);lx=p.x;ly=p.y;},{passive:false});
+sc.addEventListener('touchmove',e=>{e.preventDefault();if(!drw)return;const p=gp(e);sx.beginPath();sx.moveTo(lx,ly);sx.lineTo(p.x,p.y);sx.strokeStyle='#ff2d78';sx.lineWidth=2.5;sx.lineCap='round';sx.stroke();lx=p.x;ly=p.y;},{passive:false});
+sc.addEventListener('touchend',()=>drw=false);
+function clearSig(){sx.clearRect(0,0,sc.width,sc.height);}
+
+// Confetti
+const cv=document.getElementById('cc'),ctx=cv.getContext('2d');
+let pcs=[],ca=false;
+function confetti(cols){
+  ca=true;cv.width=window.innerWidth;cv.height=window.innerHeight;pcs=[];
+  for(let i=0;i<220;i++)pcs.push({x:Math.random()*cv.width,y:-30-Math.random()*100,w:5+Math.random()*9,h:3+Math.random()*5,r:Math.random()*Math.PI*2,dr:0.1-Math.random()*0.2,vx:2-Math.random()*4,vy:2+Math.random()*5,c:cols[i%cols.length],a:1});
+  requestAnimationFrame(dc);
+}
+function dc(){if(!ca)return;ctx.clearRect(0,0,cv.width,cv.height);pcs=pcs.filter(p=>p.a>0.04);pcs.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.r+=p.dr;p.a-=0.004;ctx.save();ctx.globalAlpha=p.a;ctx.translate(p.x,p.y);ctx.rotate(p.r);ctx.fillStyle=p.c;ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore();});if(pcs.length)requestAnimationFrame(dc);}
+
+let signed=false;
+function handleYes(){
+  if(signed)return;signed=true;
+  confetti(['#ff2d78','#7c3aed','#10b981','#fbbf24','#fff']);
+  document.getElementById('so').classList.add('show');
+  toast({e:'🎉',t:'<strong>BECKY SIGNED IT.</strong> the internet has witnessed. no take-backs in this economy.'});
+  // 4s later: prank reveal
+  setTimeout(()=>{
+    document.getElementById('so').classList.remove('show');
+    setTimeout(()=>{
+      document.getElementById('po').classList.add('show');
+      ca=false;ctx.clearRect(0,0,cv.width,cv.height);
+      confetti(['#fbbf24','#ff2d78','#fff','#fbbf24','#7c3aed']);
+      toast({e:'😂',t:'<strong>GOT YOUUUUU BECKY 💀💀💀</strong> you actually signed it omg'}, '#fbbf24');
+      setTimeout(()=>toast({e:'📸',t:'<strong>screenshot this rn</strong> and send it to me immediately.'},'#fbbf24'),2000);
+    },600);
+  },4000);
+}
+
+setTimeout(() => {
+  toast({
+    e:'👀',
+    t:'oh Becky\'s actually reading this. <strong>respect.</strong> most people just scroll 😭'
+  });
+},3000);
+
+// Optional reminder
+setTimeout(() => {
+  toast({
+    e:'📜',
+    t:'<strong>friendly reminder:</strong> signatures are forever (emotionally).'
+  });
+},8000);
+</script>
+
+</body>
+</html>
